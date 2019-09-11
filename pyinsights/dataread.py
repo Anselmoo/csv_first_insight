@@ -60,7 +60,6 @@ def data_read(fname, norm=None):
             data[hname] /= 100.
     return data
 
-
 def data_corl(data, fname=['abs_Correlation.csv', 'Correlation.csv']):
     """
     Make a combination list of all features meaning as an absolute list
@@ -91,8 +90,6 @@ def data_corl(data, fname=['abs_Correlation.csv', 'Correlation.csv']):
 
     df_1.to_csv(fname[0], index=True)
     df_2.to_csv(fname[1], index=True)
-
-
 
 def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False, save=False):
     """
@@ -138,7 +135,6 @@ def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False, save
     if plot:
         plt.show()
 
-
 def data_apri(data, keyel, keybl=[1,-3], fname='apriori.png', threshold=0.6, plot=False,save=False):
     """
     A quick apriori-analysis to find correlating pairs
@@ -181,7 +177,6 @@ def data_apri(data, keyel, keybl=[1,-3], fname='apriori.png', threshold=0.6, plo
         plt.savefig(fname, dpi=300)
     if plot:
         plt.show()
-
 
 if __name__ == "__main__":
     data = data_read(fname='train-data.csv',norm=['winpercent'])
