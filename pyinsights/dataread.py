@@ -1,4 +1,4 @@
-__all__ = ['data_read','data_corl','data_plot','data_apri']
+__all__ = ['data_head','data_read','data_corl','data_plot','data_apri']
 """
 The initial data-csv read and export functions:
 The function-set consist of:
@@ -15,6 +15,22 @@ import seaborn as sns
 from itertools import combinations
 from mlxtend.frequent_patterns import apriori
 
+def data_head(fname):
+    """
+    Get the columns-names of the csv
+
+    Parameters
+    ----------
+    fname: str
+        Filename of the csv-data
+
+    Returns
+    ----------
+
+    str-list:
+        header-names of the csv-data
+    """
+    return pd.read_csv(fname, encoding='ISO-8859-1').columns
 
 def data_read(fname, norm=None):
     """
@@ -161,7 +177,7 @@ def data_apri(data, keyel, keybl=[1,-3], fname='apriori.png', threshold=0.6, plo
 
 
 if __name__ == "__main__":
-    data = data_read(fname='candy-data.csv',norm=['winpercent'])
+    data = data_read(fname='train-data.csv',norm=['winpercent'])
 
     def printf(data):
         print(data.head())
