@@ -18,11 +18,13 @@ The options of the Command Line Interface (CLI) are:
     py -m pyinsights --help
     usage: __main__.py [-h] [--fname FNAME FNAME] [--mode MODE] [--export]
 
-    Analyzer for small (# < 10,000) csv-Databases with binary content via scikit-learn! Training-Set and Test-Set is separately stored in two databases.
+    Analyzer for small (# < 10,000) csv-Databases with binary content via scikit-learn! 
+    Training-Set and Test-Set is separately stored in two databases.
 
     optional arguments:
     -h, --help           show this help message and exit
-    --fname FNAME FNAME  Two filenames have to be defined for the train- and test-set. Default names are: train-data.csv','test-data.csv'
+    --fname FNAME FNAME  Two filenames have to be defined for the train- and test-set. 
+                         Default names are: train-data.csv','test-data.csv'
     --mode MODE          Please chose the model for the forecaset: 
                           *Ridge-Regression as a Variation of Linear-Regressions -> rig(deafault) 
                           *Gradient-Boosting-Trees -> grad 
