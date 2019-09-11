@@ -1,3 +1,4 @@
+__all__ = ['data_head','data_read','data_corl','data_plot','data_apri']
 """
 The initial data-csv read and export functions:
 The function-set consist of:
@@ -6,10 +7,6 @@ data_read(): -> converting csv into a datastream in the pandas-style
 data_plot(): -> generating the correlation-graph between the features
 data_corl(): -> generating the correlation between the features as an ascii-export (*txt)
 data_apri(): -> generating an apriori-analysis on the flight
----
-
-
-There are some dummy functions.
 """
 
 import pandas as pd
@@ -18,33 +15,71 @@ import seaborn as sns
 from itertools import combinations
 from mlxtend.frequent_patterns import apriori
 
-
-def data_read(fname,winper=True):
+def data_head(fname):
     """
-    str :param fname: string to the csv
-    pandas.object :return: pandas object with string header
+    Get the columns-names of the csv
 
-    objective:
-    ---
-    reading the csv-file and exporting to pandas.object
-    normalizing the winperecentage by dividing by float(100)
+    Parameters
+    ----------
+    fname: str
+        Filename of the csv-data
+
+    Returns
+    ----------
+
+    str-list:
+        header-names of the csv-data
     """
+    return pd.read_csv(fname, encoding='ISO-8859-1').columns
+
+def data_read(fname, norm=None):
+    """
+    Reads the csv-file and exports it to pandas.object.
+    Optional it normalize columns by dividing by float(100)
+
+    Parameters
+    ----------
+
+    fname: str
+        Filename of the csv-data
+    norm: str-list
+        Columns-Names for 100%-division
+
+    Returns
+    ----------
+
+    data: ndarray
+        pandas.dataframe with string header
+
+    """
+
+
     data = pd.read_csv(fname, encoding='ISO-8859-1')
-    if winper: data['winpercent'] /= 100.
+    if norm is not None:
+        for hname in norm:
+            data[hname] /= 100.
     return data
 
 
 def data_corl(data, fname=['abs_Correlation.csv', 'Correlation.csv']):
     """
-    2D-obj :param data: pandas-data-object (numpy.ndarray)
-    2D-str-list :fname: filename of the *.csv
-    2D-list :save: two 2D-list for absolute and relative correlation of the values including the indexing
+    Make a combination list of all features meaning as an absolute list
+    Make a combination list of all features meaning as an relative list
 
-    objective:
-    ---
 
-    make a combination list of all features meaning as an absolute list
-    make a combination list of all features meaning as an relative list
+    Parameters
+    ----------
+
+    data: ndarray
+        pandas.dataframe with string header
+    fname: str-list
+        Filename of the to exporting csv-data
+
+    Returns
+    ----------
+        csv: data
+            Save to database with absolute and relative errors of the input-dataset
+
     """
     df_1 = pd.DataFrame([[i, j, data.corr().abs().loc[i, j]] for i, j in list(combinations(data.corr().abs(), 2))]
                         , columns=['Feature1', 'Feature2', 'abs(corr)'])  # Generating all combinations
@@ -58,21 +93,19 @@ def data_corl(data, fname=['abs_Correlation.csv', 'Correlation.csv']):
     df_2.to_csv(fname[1], index=True)
 
 
-def printf(data):
-    # Dummy function for internal debugging
-    print(data.head())
-    print(data.columns.values)
-    #print(corrank(data))
-    #print(dataset.sugarpercent)
-
 
 def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False):
     """
     Compute pairwise correlation of columns and print as png by using the searbon-lib
-    2D-obj :param data: pandas-data-object (numpy.ndarray)
-    str  :param fname: filename for the png of the correlation-graph
-    bool :param plot: show the plot via tinker-interface
-    img  :return: png-file
+
+    Parameters
+    ----------
+    data: ndarray
+        pandas.dataframe with string header
+    fname: str-list
+        Filename of the to exporting csv-data
+    plot: bool
+        switch on plt.show()
     """
 
 
@@ -98,34 +131,59 @@ def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False):
 
     plt.title('Correlation between different features')
     plt.savefig(fname[1], dpi=300)
-    if plot: plt.show()
+    if plot:
+        plt.show()
 
 
-def data_apri(data, fname='apriori.png', plot=False):
+def data_apri(data, keyel, keybl=[1,-3], fname='apriori.png', threshold=0.6, plot=False):
     """
-    2D-obj :param data: pandas-data-object (numpy.ndarray)
-    str  :param fname: filename for the png of the apriori-graph
-    bool :param plot: show the plot via tinker-interface
-    img :return:  png-file
+    A quick apriori-analysis to find correlating pairs
 
+    Notes
+    -----
     The apriori-algorithm based on:
     Agrawal, Rakesh, and Ramakrishnan Srikant. "Fast algorithms for mining association rules."
     Proc. 20th int. conf. very large data bases, VLDB. Vol. 1215. 1994.
-    """
-    winners = data[data.winpercent > data.winpercent.quantile(.6)]
 
-    data_f = winners[data.columns[1:-3]]
+    See Also
+    --------
+    https://en.wikipedia.org/wiki/Apriori_algorithm
+
+   Parameters
+    ----------
+    data: ndarray
+        pandas.dataframe with string header
+    keyel: str
+        column-name for  the critical key-element
+    keybl: int-list
+        list for the array-indices for the poor binaries (0-1) entries in numpy-notation
+    fname: str-list
+        Filename of the to exporting csv-data
+    threshold: float
+        lower threshold for the quick comparsion
+    plot: bool
+        switch on plt.show()
+    """
+    winners = data[data[keyel] > data[keyel].quantile(threshold)]
+
+    data_f = winners[data.columns[keybl[0]:keybl[1]]]
     association = apriori(data_f, min_support=0.3, use_colnames=True).sort_values(by='support')
     plt.figure(figsize=(9,7))
     association.plot(kind='barh', x='itemsets', y='support', title=f'Most Frequently Used Composition',
                      sort_columns=True, figsize=(10, 5), legend=True)
     plt.savefig(fname, dpi=300)
-    if plot: plt.show()
+    if plot:
+        plt.show()
 
 
 if __name__ == "__main__":
-    data = data_read(fname='candy-data.csv')
+    data = data_read(fname='train-data.csv',norm=['winpercent'])
+
+    def printf(data):
+        print(data.head())
+        print(data.columns.values)
+
     printf(data)
-    data_plot(data)
-    data_corl(data)
-    data_apri(data)
+    #data_plot(data)
+    #data_corl(data)
+    data_apri(data,keyel='winpercent')
