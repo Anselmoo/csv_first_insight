@@ -81,10 +81,15 @@ def data_corl(data, fname=['abs_Correlation.csv', 'Correlation.csv']):
 def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False):
     """
     Compute pairwise correlation of columns and print as png by using the searbon-lib
-    2D-obj :param data: pandas-data-object (numpy.ndarray)
-    str  :param fname: filename for the png of the correlation-graph
-    bool :param plot: show the plot via tinker-interface
-    img  :return: png-file
+
+    Parameters
+    ----------
+    data: ndarray
+        pandas.dataframe with string header
+    fname: str-list
+        Filename of the to exporting csv-data
+    plot: bool
+        switch on plt.show()
     """
 
 
@@ -110,23 +115,42 @@ def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False):
 
     plt.title('Correlation between different features')
     plt.savefig(fname[1], dpi=300)
-    if plot: plt.show()
+    if plot:
+        plt.show()
 
 
-def data_apri(data, fname='apriori.png', plot=False):
+def data_apri(data, keyel, keybl=[1,-3], fname='apriori.png', threshold=0.6, plot=False):
     """
-    2D-obj :param data: pandas-data-object (numpy.ndarray)
-    str  :param fname: filename for the png of the apriori-graph
-    bool :param plot: show the plot via tinker-interface
-    img :return:  png-file
+    A quick apriori-analysis to find correlating pairs
 
+    Notes
+    -----
     The apriori-algorithm based on:
     Agrawal, Rakesh, and Ramakrishnan Srikant. "Fast algorithms for mining association rules."
     Proc. 20th int. conf. very large data bases, VLDB. Vol. 1215. 1994.
-    """
-    winners = data[data.winpercent > data.winpercent.quantile(.6)]
 
-    data_f = winners[data.columns[1:-3]]
+    See Also
+    --------
+    https://en.wikipedia.org/wiki/Apriori_algorithm
+
+   Parameters
+    ----------
+    data: ndarray
+        pandas.dataframe with string header
+    keyel: str
+        column-name for  the critical key-element
+    keybl: int-list
+        list for the array-indices for the poor binaries (0-1) entries in numpy-notation
+    fname: str-list
+        Filename of the to exporting csv-data
+    threshold: float
+        lower threshold for the quick comparsion
+    plot: bool
+        switch on plt.show()
+    """
+    winners = data[data[keyel] > data[keyel].quantile(threshold)]
+
+    data_f = winners[data.columns[keybl[0]:keybl[1]]]
     association = apriori(data_f, min_support=0.3, use_colnames=True).sort_values(by='support')
     plt.figure(figsize=(9,7))
     association.plot(kind='barh', x='itemsets', y='support', title=f'Most Frequently Used Composition',
@@ -146,4 +170,4 @@ if __name__ == "__main__":
     printf(data)
     #data_plot(data)
     #data_corl(data)
-    #data_apri(data)
+    data_apri(data,keyel='winpercent')
