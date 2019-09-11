@@ -1,4 +1,6 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/anselmoo/csv_first_insight/badge)](https://www.codefactor.io/repository/github/anselmoo/csv_first_insight)
+
+[![Mergify Status](https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/Anselmoo/csv_first_insight&style=flat)](https://github.com/Anselmoo/csv_first_insight/commits/master)
 ![GitHub](https://img.shields.io/github/license/Anselmoo/csv_first_insight)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Anselmoo/csv_first_insight)
 # CSV-First-Insights
