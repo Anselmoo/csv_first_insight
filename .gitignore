@@ -5,3 +5,4 @@
 /pyinsights.egg-info/
 /dist/
 /build/
+/test_ci/

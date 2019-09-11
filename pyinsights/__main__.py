@@ -6,10 +6,13 @@ def cmd():
     Here later an argphraser will control the engine
     """
 
-    despription_init = "Analyzer of the small csv-Databases with binary content via scikit-learn!"
+    despription_init = "Analyzer for small (# < 10,000) csv-Databases with binary content via scikit-learn! " \
+                       "Training-Set and Test-Set is separately stored in two databases."
     parser = argparse.ArgumentParser(description=despription_init)
-    parser.add_argument('--export', help="Export the Apriori-Analysis as well "
-                                         "as the Cluster-Maps as png file to get the correlation", action='store_true')
+    parser.add_argument("--fname", nargs=2, type=str, default=['train-data.csv', 'test-data.csv'],
+                        help="Two filenames have to be defined for the train- and "
+                             "test-set. Default names are: "
+                             "train-data.csv','test-data.csv'")
     parser.add_argument("--mode", type=str, default='rig', help="Please chose the model for the forecaset:\n"
                                                                 "\t*Ridge-Regression as a Variation of  Linear-Regressions "
                                                                 "-> rig (deafault)\n"
@@ -18,10 +21,8 @@ def cmd():
                                                                 "\nIf you are planning to use all three models, "
                                                                 "please choose -> all"
                         )
-    parser.add_argument("--fname",nargs=2, type=str, default=['train-data.csv','test-data.csv'],
-                                                            help="Two filenames have to be defined for the train- and "
-                                                                 "test-set. Default names are: "
-                                                                 "train-data.csv','test-data.csv'")
+    parser.add_argument('--export', help="Export the Apriori-Analysis, Cluster-Maps, and Predictions as png- "
+                                         "and txt-file", action='store_true')
     args = parser.parse_args()
     ts = TrainSet()
     ts.initialize(fname=args.fname[0], export=args.export)
