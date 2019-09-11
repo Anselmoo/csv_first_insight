@@ -283,8 +283,8 @@ class TrainSet(MlModels, PredictModel, PlotModes):
         self.data = dr.data_read(fname=fname, norm=[self._chead[-1]])
         if export:
             # calling the export functions
-            dr.data_plot(data=self.data)
-            dr.data_apri(data=self.data)
+            dr.data_plot(data=self.data, save=True)
+            dr.data_apri(data=self.data, save=True)
             dr.data_corl(data=self.data)
 
     def trainset_split(self):
@@ -329,11 +329,4 @@ class TrainSet(MlModels, PredictModel, PlotModes):
         self.ordering = skl.feature_sort(features=brandname, index=index)
 
         self.plot_models(fname=self._fname + '_TestSet.png', title="New Testset-prediction")
-
-    def __del__(self):
-        # That's optional to remove the garbage from the data- and prediction-variables
-        self.data
-        self.X_train
-        self.y_train
-
 
