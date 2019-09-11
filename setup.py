@@ -5,6 +5,7 @@ except ImportError:
 
 __authors__ = ['Anselm Hahn']
 __license__ = 'MIT'
+__version__ = '0.5'
 __date__ = '11/09/2019'
 
 with open('requirements.txt') as f:
@@ -13,7 +14,7 @@ with open('requirements.txt') as f:
 
 setup(
 	name='pyinsights',
-	version='0.5',
+	version=__version__,
 	packages=['test', 'examples', 'pyinsights','docs'],
 	package_data={'examples': ['*csv'],'docs': ['*csv']},
 	include_package_data=True,
