@@ -118,25 +118,23 @@ def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False, save
     # Generating correlation-map
     #plt.figure(figsize=(13, 13))
 
-    sns_1 = sns.heatmap(correlation, center=0, vmin=-1, vmax=1,
+    sns.heatmap(correlation, center=0, vmin=-1, vmax=1,
                    square=True, annot=True, cmap='bwr', fmt='.1f',
                    linewidths=.75)
 
     plt.title('Hierarchically-clustering between different features')
     if save:
-        sns_1.get_figure()
-        sns_1.savefig(fname[0], dpi=300)
+        plt.savefig(fname[0], dpi=300)
 
     # Generating clustermap
-    sns_2 = sns.clustermap(correlation, center=0, vmin=-1, vmax=1,
+    sns.clustermap(correlation, center=0, vmin=-1, vmax=1,
                    square=True, annot=True, cmap='bwr', fmt='.1f',
-                   linewidths=.75, figsize=(13, 13))
+                   linewidths=.75)
 
 
     plt.title('Correlation between different features')
     if save:
-        sns_2.get_figure()
-        sns_2.savefig(fname[1], dpi=300)
+        plt.savefig(fname[1], dpi=300)
     if plot:
         plt.show()
 
