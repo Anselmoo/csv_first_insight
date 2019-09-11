@@ -1,3 +1,4 @@
+__all__ = ['data_read','data_corl','data_plot','data_apri']
 """
 The initial data-csv read and export functions:
 The function-set consist of:
@@ -6,10 +7,6 @@ data_read(): -> converting csv into a datastream in the pandas-style
 data_plot(): -> generating the correlation-graph between the features
 data_corl(): -> generating the correlation between the features as an ascii-export (*txt)
 data_apri(): -> generating an apriori-analysis on the flight
----
-
-
-There are some dummy functions.
 """
 
 import pandas as pd
@@ -19,32 +16,54 @@ from itertools import combinations
 from mlxtend.frequent_patterns import apriori
 
 
-def data_read(fname,winper=True):
+def data_read(fname, norm=None):
     """
-    str :param fname: string to the csv
-    pandas.object :return: pandas object with string header
+    Reads the csv-file and exports it to pandas.object.
+    Optional it normalize columns by dividing by float(100)
 
-    objective:
-    ---
-    reading the csv-file and exporting to pandas.object
-    normalizing the winperecentage by dividing by float(100)
+    Parameters
+    ----------
+
+    fname: str
+        Filename of the csv-data
+    norm: str-list
+        Columns-Names for 100%-division
+
+    Returns
+    ----------
+
+    data: ndarray
+        pandas.dataframe with string header
+
     """
+
+
     data = pd.read_csv(fname, encoding='ISO-8859-1')
-    if winper: data['winpercent'] /= 100.
+    if norm is not None:
+        for hname in norm:
+            data[hname] /= 100.
     return data
 
 
 def data_corl(data, fname=['abs_Correlation.csv', 'Correlation.csv']):
     """
-    2D-obj :param data: pandas-data-object (numpy.ndarray)
-    2D-str-list :fname: filename of the *.csv
-    2D-list :save: two 2D-list for absolute and relative correlation of the values including the indexing
+    Make a combination list of all features meaning as an absolute list
+    Make a combination list of all features meaning as an relative list
 
-    objective:
-    ---
 
-    make a combination list of all features meaning as an absolute list
-    make a combination list of all features meaning as an relative list
+    Parameters
+    ----------
+
+    data: ndarray
+        pandas.dataframe with string header
+    fname: str-list
+        Filename of the to exporting csv-data
+
+    Returns
+    ----------
+        csv: data
+            Save to database with absolute and relative errors of the input-dataset
+
     """
     df_1 = pd.DataFrame([[i, j, data.corr().abs().loc[i, j]] for i, j in list(combinations(data.corr().abs(), 2))]
                         , columns=['Feature1', 'Feature2', 'abs(corr)'])  # Generating all combinations
@@ -57,13 +76,6 @@ def data_corl(data, fname=['abs_Correlation.csv', 'Correlation.csv']):
     df_1.to_csv(fname[0], index=True)
     df_2.to_csv(fname[1], index=True)
 
-
-def printf(data):
-    # Dummy function for internal debugging
-    print(data.head())
-    print(data.columns.values)
-    #print(corrank(data))
-    #print(dataset.sugarpercent)
 
 
 def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False):
@@ -120,12 +132,18 @@ def data_apri(data, fname='apriori.png', plot=False):
     association.plot(kind='barh', x='itemsets', y='support', title=f'Most Frequently Used Composition',
                      sort_columns=True, figsize=(10, 5), legend=True)
     plt.savefig(fname, dpi=300)
-    if plot: plt.show()
+    if plot:
+        plt.show()
 
 
 if __name__ == "__main__":
-    data = data_read(fname='candy-data.csv')
+    data = data_read(fname='candy-data.csv',norm=['winpercent'])
+
+    def printf(data):
+        print(data.head())
+        print(data.columns.values)
+
     printf(data)
-    data_plot(data)
-    data_corl(data)
-    data_apri(data)
+    #data_plot(data)
+    #data_corl(data)
+    #data_apri(data)
