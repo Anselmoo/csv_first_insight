@@ -2,3 +2,6 @@
 /pyinsights/*.png
 /examples/*.csv
 /examples/*.png
+/pyinsights.egg-info/
+/dist/
+/build/
