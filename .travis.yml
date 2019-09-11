@@ -12,5 +12,4 @@ install:
   - python setup.py install
 script:
   - py.test --cov pyinsights test # Run the tests and check for test coverage.
-
   - python -m pyinsights --help # Check if commandline will be opened.
