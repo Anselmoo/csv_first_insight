@@ -60,7 +60,6 @@ def data_read(fname, norm=None):
             data[hname] /= 100.
     return data
 
-
 def data_corl(data, fname=['abs_Correlation.csv', 'Correlation.csv']):
     """
     Make a combination list of all features meaning as an absolute list
@@ -92,9 +91,7 @@ def data_corl(data, fname=['abs_Correlation.csv', 'Correlation.csv']):
     df_1.to_csv(fname[0], index=True)
     df_2.to_csv(fname[1], index=True)
 
-
-
-def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False):
+def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False, save=False):
     """
     Compute pairwise correlation of columns and print as png by using the searbon-lib
 
@@ -106,6 +103,8 @@ def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False):
         Filename of the to exporting csv-data
     plot: bool
         switch on plt.show()
+    save: bool
+        save the matplotlib-plot as png
     """
 
 
@@ -114,28 +113,29 @@ def data_plot(data, fname=['Correlation.png','ClusterMap.png'], plot=False):
 
     correlation = data.corr() #Pandas correlation-routine
     # Generating correlation-map
-    plt.figure(figsize=(13, 13))
+    #plt.figure(figsize=(13, 13))
 
     sns.heatmap(correlation, center=0, vmin=-1, vmax=1,
                    square=True, annot=True, cmap='bwr', fmt='.1f',
                    linewidths=.75)
 
     plt.title('Hierarchically-clustering between different features')
-    plt.savefig(fname[0], dpi=300)
+    if save:
+        plt.savefig(fname[0], dpi=300)
 
     # Generating clustermap
     sns.clustermap(correlation, center=0, vmin=-1, vmax=1,
                    square=True, annot=True, cmap='bwr', fmt='.1f',
-                   linewidths=.75, figsize=(13, 13))
+                   linewidths=.75)
 
 
     plt.title('Correlation between different features')
-    plt.savefig(fname[1], dpi=300)
+    if save:
+        plt.savefig(fname[1], dpi=300)
     if plot:
         plt.show()
 
-
-def data_apri(data, keyel, keybl=[1,-3], fname='apriori.png', threshold=0.6, plot=False):
+def data_apri(data, keyel, keybl=[1,-3], fname='apriori.png', threshold=0.6, plot=False,save=False):
     """
     A quick apriori-analysis to find correlating pairs
 
@@ -163,18 +163,20 @@ def data_apri(data, keyel, keybl=[1,-3], fname='apriori.png', threshold=0.6, plo
         lower threshold for the quick comparsion
     plot: bool
         switch on plt.show()
+    save: bool
+        save the matplotlib-plot as png
     """
     winners = data[data[keyel] > data[keyel].quantile(threshold)]
 
     data_f = winners[data.columns[keybl[0]:keybl[1]]]
     association = apriori(data_f, min_support=0.3, use_colnames=True).sort_values(by='support')
-    plt.figure(figsize=(9,7))
+    #plt.figure(figsize=(9,7))
     association.plot(kind='barh', x='itemsets', y='support', title=f'Most Frequently Used Composition',
                      sort_columns=True, figsize=(10, 5), legend=True)
-    plt.savefig(fname, dpi=300)
+    if save:
+        plt.savefig(fname, dpi=300)
     if plot:
         plt.show()
-
 
 if __name__ == "__main__":
     data = data_read(fname='train-data.csv',norm=['winpercent'])
@@ -184,6 +186,6 @@ if __name__ == "__main__":
         print(data.columns.values)
 
     printf(data)
-    #data_plot(data)
-    #data_corl(data)
+    data_plot(data)
+    data_corl(data)
     data_apri(data,keyel='winpercent')
