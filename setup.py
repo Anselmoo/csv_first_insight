@@ -14,6 +14,7 @@ with open('requirements.txt') as f:
 
 setup(
 	name='pyinsights',
+	python_requires='>3.6.0,
 	version=__version__,
 	packages=['test', 'examples', 'pyinsights','docs'],
 	package_data={'examples': ['*csv'],'docs': ['*csv']},
