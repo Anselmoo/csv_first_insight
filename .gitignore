@@ -1,2 +1,4 @@
 /pyinsights/*.csv
 /pyinsights/*.png
+/examples/*.csv
+/examples/*.png
