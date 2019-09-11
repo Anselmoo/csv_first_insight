@@ -5,7 +5,7 @@ except ImportError:
 
 __authors__ = ['Anselm Hahn']
 __license__ = 'MIT'
-__version__ = '0.5'
+__version__ = '0.6'
 __date__ = '11/09/2019'
 
 with open('requirements.txt') as f:
