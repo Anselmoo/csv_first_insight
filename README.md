@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/Anselmoo/csv_first_insight.svg?branch=master)](https://travis-ci.com/Anselmoo/csv_first_insight)
 [![CodeFactor](https://www.codefactor.io/repository/github/anselmoo/csv_first_insight/badge)](https://www.codefactor.io/repository/github/anselmoo/csv_first_insight)
-[![Mergify Status](https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/Anselmoo/csv_first_insight&style=flat)](https://github.com/Anselmoo/csv_first_insight/commits/master)
+[![codebeat badge](https://codebeat.co/badges/7cfcb1a6-8106-4022-bf22-575f2171c1fc)](https://codebeat.co/projects/github-com-anselmoo-csv_first_insight-master)
 [![DOI](https://zenodo.org/badge/207603311.svg)](https://zenodo.org/badge/latestdoi/207603311)
 ![GitHub](https://img.shields.io/github/license/Anselmoo/csv_first_insight)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Anselmoo/csv_first_insight)](https://github.com/Anselmoo/csv_first_insight/releases)
