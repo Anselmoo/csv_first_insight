@@ -46,4 +46,4 @@ import pyinsights.sklsetups as skl
 
 The Ridge-Regression-Prediction of **CSV-First-Insights** for the [The Ultimate Halloween Candy Power Ranking](https://www.kaggle.com/fivethirtyeight/the-ultimate-halloween-candy-power-ranking) of kaggle:
 
-![]("https://github.com/Anselmoo/csv_first_insight/blob/master/docs/DecissionBar_ridge_reg_prediction.png")
+![](https://github.com/Anselmoo/csv_first_insight/blob/master/docs/DecissionBar_ridge_reg_prediction.png)
