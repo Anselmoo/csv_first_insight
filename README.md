@@ -19,7 +19,7 @@ The **CSV-First-Insights**-application can be installed like this:
  
 The options of the Command Line Interface (CLI) are:
 
-    py -m pyinsights --help
+    python -m pyinsights --help
     usage: __main__.py [-h] [--fname FNAME FNAME] [--mode MODE] [--export]
 
     Analyzer for small (# < 10,000) csv-Databases with binary content via scikit-learn! 
