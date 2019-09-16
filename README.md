@@ -3,7 +3,7 @@
 [![codebeat badge](https://codebeat.co/badges/7cfcb1a6-8106-4022-bf22-575f2171c1fc)](https://codebeat.co/projects/github-com-anselmoo-csv_first_insight-master)
 [![Mergify Status](https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/Anselmoo/csv_first_insight&style=flat)](https://github.com/Anselmoo/csv_first_insight/commits/master)
 [![DOI](https://zenodo.org/badge/207603311.svg)](https://zenodo.org/badge/latestdoi/207603311)
-![GitHub](https://img.shields.io/github/license/Anselmoo/csv_first_insight)
+[![GitHub](https://img.shields.io/github/license/Anselmoo/csv_first_insight)](https://github.com/Anselmoo/csv_first_insight/blob/master/LICENSE)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Anselmoo/csv_first_insight)](https://github.com/Anselmoo/csv_first_insight/releases)
 # CSV-First-Insights
 A [`sklearn`](https://scikit-learn.org/stable/index.html)-based *correlation- and prediction-maker* for small csv-data < 10,000 entries. Consquently, *no* Neural Network will be used and so far the following Models are implemented:
