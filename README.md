@@ -37,7 +37,7 @@ The options of the Command Line Interface (CLI) are:
     --export             Export the Apriori-Analysis, Cluster-Maps, and Predictions as png- and txt-file
 
 The **CSV-First-Insights** can be also loaded as packages like this:
-```
+```python
 import pyinsights
 import pyinsights.dataread as dr
 import pyinsights.mlmodels as ml
