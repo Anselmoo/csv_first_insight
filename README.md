@@ -17,7 +17,7 @@ The **CSV-First-Insights**-application can be installed like this:
 
     python setup.py install
  
-The options of the Command Line Interface (CLI) are:
+The options of the Command Line Interface of **CSV-First-Insights** are:
 
     python -m pyinsights --help
     usage: __main__.py [-h] [--fname FNAME FNAME] [--mode MODE] [--export]
