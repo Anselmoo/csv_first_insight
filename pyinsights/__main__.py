@@ -35,17 +35,17 @@ def cmd():
         we need three if checks, otherwise it will stop at the first if-elif-else statement
         Finally, a checker for choosen the wrong or not listed model.
         """
-        if args.mode.lower() == 'rig' or args.mode.lower() == 'all':
+        if args.mode.lower() in ['rig', 'all']:
             print("Ridge-Regression-Method is chosen!")
             ts.run_models(mode='linear')  # Learning
             ts.predict_models(fname=args.fname[1])  # Testing
             print("Done!")
-        if args.mode.lower() == 'grad' or args.mode.lower() == 'all':
+        if args.mode.lower() in ['grad', 'all']:
             print("Gradient-Boosting-Trees-Method is chosen!")
             ts.run_models(mode='tree')  # Learning
             ts.predict_models(fname=args.fname)  # Testing
             print("Done!")
-        if args.mode.lower() == 'fors' or args.mode.lower() == 'all':
+        if args.mode.lower() in ['fors', 'all']:
             print("Random-Forest-Method is chosen!")
             ts.run_models(mode='forest')  # Learning
             ts.predict_models(fname=args.fname)  # Testing
